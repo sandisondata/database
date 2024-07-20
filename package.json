@@ -1,0 +1,27 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "Database Interface",
+  "author": "Grant Fortington",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "node-debug": "github:gwfortington/node-debug",
+    "node-postgresql": "github:gwfortington/node-postgresql",
+    "node-postgresql-config": "github:gwfortington/node-postgresql-config"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.6",
+    "@types/node": "^20.14.9",
+    "rimraf": "^6.0.0"
+  },
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ]
+}
