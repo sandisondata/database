@@ -12,7 +12,7 @@ import {
 } from 'node-postgresql-config';
 
 let debug: Debug;
-const debugSource = 'database';
+const debugSource = 'postgresql';
 
 export interface Options {
   configFilePath?: string;

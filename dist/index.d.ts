@@ -3,7 +3,7 @@ export interface Options {
     configFilePath?: string;
     repositoryNumber?: number;
 }
-export declare class Database {
+export declare class PostgreSQL {
     private readonly options?;
     constructor(options?: Options | undefined);
     get query(): Query;
