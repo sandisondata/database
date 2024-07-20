@@ -6,9 +6,9 @@ import {
   transaction,
 } from 'node-postgresql';
 import {
-  Config,
   Options as ConfigOptions,
   OverrideRules,
+  PostgreSQLConfig,
 } from 'node-postgresql-config';
 
 let debug: Debug;
@@ -19,7 +19,7 @@ export interface Options {
   repositoryNumber?: number;
 }
 
-export class Database {
+export class PostgreSQL {
   constructor(private readonly options?: Options) {
     debug = new Debug(debugSource);
     debug.write(
@@ -42,7 +42,7 @@ export class Database {
       };
       configOptions.overrideRules = overrideRules;
     }
-    const config = new Config(
+    const config = new PostgreSQLConfig(
       Object.keys(configOptions).length > 0 ? configOptions : undefined
     );
     debug.write(
