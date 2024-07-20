@@ -1,7 +1,7 @@
 {
-  "name": "database",
+  "name": "postgresql",
   "version": "1.0.0",
-  "description": "Database Interface",
+  "description": "PostgreSQL Database",
   "author": "Grant Fortington",
   "private": true,
   "license": "MIT",
