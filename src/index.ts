@@ -1,32 +1,37 @@
 import { Debug, MessageType } from 'node-debug';
-import { createConnectionPool, query, transaction } from 'node-postgresql';
-import Config from 'node-postgresql-config';
+import {
+  createConnectionPool,
+  query,
+  Query,
+  transaction,
+} from 'node-postgresql';
+import {
+  Config,
+  Options as ConfigOptions,
+  OverrideRules,
+} from 'node-postgresql-config';
 
 let debug: Debug;
 const debugSource = 'database';
 
-interface Options {
+export interface Options {
   configFilePath?: string;
   repositoryNumber?: number;
 }
 
-export default class Database {
+export class Database {
   constructor(private readonly options?: Options) {
     debug = new Debug(debugSource);
     debug.write(
       MessageType.Entry,
       this.options ? `options=${JSON.stringify(options)}` : undefined
     );
-    const configOptions = {};
+    const configOptions: ConfigOptions = {};
     if (this.options && this.options.configFilePath) {
-      Object.defineProperty(
-        configOptions,
-        'filePath',
-        this.options.configFilePath
-      );
+      configOptions.filePath = this.options.configFilePath;
     }
     if (this.options && this.options.repositoryNumber) {
-      const overrides = {
+      const overrideRules: OverrideRules = {
         database: () => {
           const prefix = process.env.POSTGRESQL_DATABASE_PREFIX!;
           return (
@@ -35,7 +40,7 @@ export default class Database {
           );
         },
       };
-      Object.defineProperty(configOptions, 'overrides', overrides);
+      configOptions.overrideRules = overrideRules;
     }
     const config = new Config(
       Object.keys(configOptions).length > 0 ? configOptions : undefined
