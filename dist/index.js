@@ -10,7 +10,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var _a, _Database_database;
+var _a, _Database_instance;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Database = void 0;
 const node_debug_1 = require("node-debug");
@@ -50,10 +50,10 @@ class Database {
         debug.write(node_debug_1.MessageType.Exit);
     }
     static getInstance(options) {
-        if (!__classPrivateFieldGet(this, _a, "f", _Database_database)) {
-            __classPrivateFieldSet(this, _a, new _a(options), "f", _Database_database);
+        if (!__classPrivateFieldGet(this, _a, "f", _Database_instance)) {
+            __classPrivateFieldSet(this, _a, new _a(options), "f", _Database_instance);
         }
-        return __classPrivateFieldGet(this, _a, "f", _Database_database);
+        return __classPrivateFieldGet(this, _a, "f", _Database_instance);
     }
     get query() {
         return node_postgresql_1.query;
@@ -64,4 +64,4 @@ class Database {
 }
 exports.Database = Database;
 _a = Database;
-_Database_database = { value: void 0 };
+_Database_instance = { value: void 0 };

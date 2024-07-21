@@ -21,7 +21,7 @@ export interface Options {
 }
 
 export class Database {
-  static #database: Database;
+  static #instance: Database;
 
   private constructor(options?: Options) {
     debug = new Debug(debugSource);
@@ -68,10 +68,10 @@ export class Database {
   }
 
   public static getInstance(options?: Options) {
-    if (!this.#database) {
-      this.#database = new Database(options);
+    if (!this.#instance) {
+      this.#instance = new Database(options);
     }
-    return this.#database;
+    return this.#instance;
   }
 
   get query() {
