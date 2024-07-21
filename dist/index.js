@@ -36,7 +36,12 @@ class Database {
             };
             configOptions.ruleOverrides = ruleOverrides;
         }
-        debug.write(node_debug_1.MessageType.Value, `configOptions=${JSON.stringify(configOptions)}`);
+        debug.write(node_debug_1.MessageType.Value, `configOptions=${JSON.stringify(configOptions, (key, value) => {
+            if (typeof value == 'function') {
+                return '<function>';
+            }
+            return value;
+        })}`);
         debug.write(node_debug_1.MessageType.Step, 'Generating config...');
         const config = (0, node_postgresql_config_1.generate)(Object.keys(configOptions).length > 0 ? configOptions : undefined);
         debug.write(node_debug_1.MessageType.Value, `config=${JSON.stringify((0, node_postgresql_config_1.redacted)(config))}`);

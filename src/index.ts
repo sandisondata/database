@@ -47,7 +47,12 @@ export class Database {
     }
     debug.write(
       MessageType.Value,
-      `configOptions=${JSON.stringify(configOptions)}`
+      `configOptions=${JSON.stringify(configOptions, (key, value) => {
+        if (typeof value == 'function') {
+          return '<function>';
+        }
+        return value;
+      })}`
     );
     debug.write(MessageType.Step, 'Generating config...');
     const config = generate(
