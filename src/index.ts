@@ -29,6 +29,7 @@ export class Database {
       MessageType.Entry,
       options ? `options=${JSON.stringify(options)}` : undefined
     );
+    debug.write(MessageType.Step, 'Generating config options...');
     const configOptions: ConfigOptions = {};
     if (options && options.configFilePath) {
       configOptions.filePath = options.configFilePath;

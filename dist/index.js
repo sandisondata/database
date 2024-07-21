@@ -22,6 +22,7 @@ class Database {
     constructor(options) {
         debug = new node_debug_1.Debug(debugSource);
         debug.write(node_debug_1.MessageType.Entry, options ? `options=${JSON.stringify(options)}` : undefined);
+        debug.write(node_debug_1.MessageType.Step, 'Generating config options...');
         const configOptions = {};
         if (options && options.configFilePath) {
             configOptions.filePath = options.configFilePath;
