@@ -1,8 +1,8 @@
 import { Debug, MessageType } from 'node-debug';
 import {
   createConnectionPool,
-  query,
   Query,
+  query,
   transaction,
 } from 'node-postgresql';
 import {
