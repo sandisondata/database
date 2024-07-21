@@ -45,6 +45,11 @@ export class Database {
       };
       configOptions.ruleOverrides = ruleOverrides;
     }
+    debug.write(
+      MessageType.Value,
+      `configOptions=${JSON.stringify(configOptions)}`
+    );
+    debug.write(MessageType.Step, 'Generating config...');
     const config = generate(
       Object.keys(configOptions).length > 0 ? configOptions : undefined
     );
@@ -52,7 +57,9 @@ export class Database {
       MessageType.Value,
       `config=${JSON.stringify(redacted(config))}`
     );
+    debug.write(MessageType.Step, 'Creating connection pool...');
     createConnectionPool(config);
+    debug.write(MessageType.Exit);
   }
 
   public static getInstance(options?: Options) {

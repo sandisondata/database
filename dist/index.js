@@ -36,9 +36,13 @@ class Database {
             };
             configOptions.ruleOverrides = ruleOverrides;
         }
+        debug.write(node_debug_1.MessageType.Value, `configOptions=${JSON.stringify(configOptions)}`);
+        debug.write(node_debug_1.MessageType.Step, 'Generating config...');
         const config = (0, node_postgresql_config_1.generate)(Object.keys(configOptions).length > 0 ? configOptions : undefined);
         debug.write(node_debug_1.MessageType.Value, `config=${JSON.stringify((0, node_postgresql_config_1.redacted)(config))}`);
+        debug.write(node_debug_1.MessageType.Step, 'Creating connection pool...');
         (0, node_postgresql_1.createConnectionPool)(config);
+        debug.write(node_debug_1.MessageType.Exit);
     }
     static getInstance(options) {
         if (!__classPrivateFieldGet(this, _a, "f", _Database_instance)) {
