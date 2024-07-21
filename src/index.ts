@@ -1,5 +1,10 @@
 import { Debug, MessageType } from 'node-debug';
-import { createConnectionPool, query, transaction } from 'node-postgresql';
+import {
+  createConnectionPool,
+  query,
+  Query,
+  transaction,
+} from 'node-postgresql';
 import {
   generate,
   Options as ConfigOptions,
@@ -10,7 +15,7 @@ import {
 let debug: Debug;
 const debugSource = 'database.class';
 
-interface Options {
+export interface Options {
   configFilePath?: string;
   repositoryNumber?: number;
 }
