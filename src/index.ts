@@ -36,7 +36,7 @@ export class Database {
     if (options && options.repositoryNumber) {
       const ruleOverrides: RuleOverrides = {
         database: () => {
-          const prefix = process.env.POSTGRESQL_DATABASE_PREFIX!;
+          const prefix = process.env.POSTGRESQL_DATABASE_PREFIX;
           return (
             (prefix ? `${prefix}_` : '') +
             `repository_${options.repositoryNumber}`
