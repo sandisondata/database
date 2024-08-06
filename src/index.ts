@@ -15,12 +15,12 @@ import {
 let debug: Debug;
 const debugSource = 'database.class';
 
-export interface Options {
+interface Options {
   configFilePath?: string;
   repositoryNumber?: number;
 }
 
-export class Database {
+class Database {
   static #instance: Database;
 
   private constructor(options?: Options) {
@@ -83,3 +83,5 @@ export class Database {
     return transaction;
   }
 }
+
+export { Database, Options, Query };
