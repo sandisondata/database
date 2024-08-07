@@ -68,7 +68,7 @@ class Database {
     debug.write(MessageType.Exit);
   }
 
-  public static getInstance(options?: Options) {
+  static getInstance(options?: Options) {
     if (!this.#instance) {
       this.#instance = new Database(options);
     }
