@@ -48,6 +48,17 @@ class Database {
         debug.write(node_debug_1.MessageType.Value, `config=${JSON.stringify((0, node_postgresql_config_1.redacted)(config))}`);
         debug.write(node_debug_1.MessageType.Step, 'Creating connection pool...');
         (0, node_postgresql_1.createConnectionPool)(config);
+        debug.write(node_debug_1.MessageType.Step, 'Setting "bigint" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.INT8, (value) => parseInt(value));
+        debug.write(node_debug_1.MessageType.Step, 'Setting "decimal" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.NUMERIC, (value) => parseFloat(value));
+        debug.write(node_debug_1.MessageType.Step, 'Setting "date" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.DATE, (value) => value);
+        const datetimeParser = (value) => value.replace(' ', 'T');
+        debug.write(node_debug_1.MessageType.Step, 'Setting "datetime" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMP, datetimeParser);
+        debug.write(node_debug_1.MessageType.Step, 'Setting "datetimetz" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMPTZ, datetimeParser);
         debug.write(node_debug_1.MessageType.Exit);
     }
     static getInstance(options) {

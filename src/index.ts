@@ -4,6 +4,7 @@ import {
   Query,
   query,
   transaction,
+  types,
 } from 'node-postgresql';
 import {
   generate,
@@ -65,6 +66,17 @@ class Database {
     );
     debug.write(MessageType.Step, 'Creating connection pool...');
     createConnectionPool(config);
+    debug.write(MessageType.Step, 'Setting "bigint" type parser...');
+    types.setTypeParser(types.builtins.INT8, (value) => parseInt(value));
+    debug.write(MessageType.Step, 'Setting "decimal" type parser...');
+    types.setTypeParser(types.builtins.NUMERIC, (value) => parseFloat(value));
+    debug.write(MessageType.Step, 'Setting "date" type parser...');
+    types.setTypeParser(types.builtins.DATE, (value) => value);
+    const datetimeParser = (value: string) => value.replace(' ', 'T');
+    debug.write(MessageType.Step, 'Setting "datetime" type parser...');
+    types.setTypeParser(types.builtins.TIMESTAMP, datetimeParser);
+    debug.write(MessageType.Step, 'Setting "datetimetz" type parser...');
+    types.setTypeParser(types.builtins.TIMESTAMPTZ, datetimeParser);
     debug.write(MessageType.Exit);
   }
 
