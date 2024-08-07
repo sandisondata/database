@@ -28,7 +28,7 @@ class Database {
     debug = new Debug(debugSource);
     debug.write(
       MessageType.Entry,
-      options ? `options=${JSON.stringify(options)}` : undefined
+      options ? `options=${JSON.stringify(options)}` : undefined,
     );
     debug.write(MessageType.Step, 'Generating config options...');
     const configOptions: ConfigOptions = {};
@@ -54,15 +54,15 @@ class Database {
           return '<function>';
         }
         return value;
-      })}`
+      })}`,
     );
     debug.write(MessageType.Step, 'Generating config...');
     const config = generate(
-      Object.keys(configOptions).length > 0 ? configOptions : undefined
+      Object.keys(configOptions).length > 0 ? configOptions : undefined,
     );
     debug.write(
       MessageType.Value,
-      `config=${JSON.stringify(redacted(config))}`
+      `config=${JSON.stringify(redacted(config))}`,
     );
     debug.write(MessageType.Step, 'Creating connection pool...');
     createConnectionPool(config);
