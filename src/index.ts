@@ -1,5 +1,5 @@
 import { Debug, MessageType } from 'node-debug';
-import { PostgreSQL, types } from 'node-postgresql';
+import { PostgreSQL, Query, types } from 'node-postgresql';
 import {
   generate,
   Options as ConfigOptions,
@@ -95,4 +95,4 @@ class Database {
   }
 }
 
-export { Database, Options };
+export { Database, Options, Query };
