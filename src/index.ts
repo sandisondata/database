@@ -1,5 +1,12 @@
 import { Debug, MessageType } from 'node-debug';
-import { PostgreSQL, Query, types } from 'node-postgresql';
+import {
+  createConnectionPool,
+  Query,
+  query,
+  shutdown,
+  transaction,
+  types,
+} from 'node-postgresql';
 import {
   generate,
   Options as ConfigOptions,
@@ -17,7 +24,6 @@ interface Options {
 
 class Database {
   static #instance: Database;
-  #postgreSQL: PostgreSQL;
 
   private constructor(options?: Options) {
     debug = new Debug(debugSource);
@@ -59,8 +65,8 @@ class Database {
       MessageType.Value,
       `config=${JSON.stringify(redacted(config))}`,
     );
-    debug.write(MessageType.Step, 'Creating PostgreSQL instance...');
-    this.#postgreSQL = PostgreSQL.getInstance(config);
+    debug.write(MessageType.Step, 'Creating connection pool...');
+    createConnectionPool(config);
     debug.write(MessageType.Step, 'Setting "bigint" type parser...');
     types.setTypeParser(types.builtins.INT8, (value) => parseInt(value));
     debug.write(MessageType.Step, 'Setting "decimal" type parser...');
@@ -83,15 +89,15 @@ class Database {
   }
 
   get query() {
-    return this.#postgreSQL.query;
-  }
-
-  get shutdown() {
-    return this.#postgreSQL.shutdown;
+    return query;
   }
 
   get transaction() {
-    return this.#postgreSQL.transaction;
+    return transaction;
+  }
+
+  get shutdown() {
+    return shutdown;
   }
 }
 

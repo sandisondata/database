@@ -7,8 +7,8 @@ declare class Database {
     #private;
     private constructor();
     static getInstance(options?: Options): Database;
-    get query(): (text: string, values?: any[]) => Promise<import("pg").QueryResult>;
-    get shutdown(): () => Promise<void>;
+    get query(): Query;
     get transaction(): (callback: (query: Query) => Promise<void>) => Promise<void>;
+    get shutdown(): () => Promise<void>;
 }
 export { Database, Options, Query };
