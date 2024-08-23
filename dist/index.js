@@ -57,7 +57,7 @@ class Database {
         const datetimeParser = (value) => value.replace(' ', 'T');
         debug.write(node_debug_1.MessageType.Step, 'Setting "datetime" type parser...');
         node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMP, datetimeParser);
-        debug.write(node_debug_1.MessageType.Step, 'Setting "datetimetz" type parser...');
+        debug.write(node_debug_1.MessageType.Step, 'Setting "datetime-tz" type parser...');
         node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMPTZ, datetimeParser);
         debug.write(node_debug_1.MessageType.Exit);
     }

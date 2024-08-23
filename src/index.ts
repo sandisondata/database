@@ -76,7 +76,7 @@ class Database {
     const datetimeParser = (value: string) => value.replace(' ', 'T');
     debug.write(MessageType.Step, 'Setting "datetime" type parser...');
     types.setTypeParser(types.builtins.TIMESTAMP, datetimeParser);
-    debug.write(MessageType.Step, 'Setting "datetimetz" type parser...');
+    debug.write(MessageType.Step, 'Setting "datetime-tz" type parser...');
     types.setTypeParser(types.builtins.TIMESTAMPTZ, datetimeParser);
     debug.write(MessageType.Exit);
   }
