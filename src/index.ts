@@ -126,14 +126,13 @@ class Database {
   }
 
   /**
-   * Returns the shutdown function that can be used to shut down the database
-   * connection.
+   * Shuts down the database connection.
    *
-   * @returns {() => Promise<void>} The shutdown function that can be used to
-   * shut down the database connection.
+   * @returns {Promise<void>} A promise that resolves when the database connection
+   * has been shut down.
    */
-  get shutdown(): () => Promise<void> {
-    return shutdown;
+  async shutdown(): Promise<void> {
+    await shutdown();
   }
 }
 

@@ -37,12 +37,11 @@ declare class Database {
      */
     get transaction(): (callback: (query: Query) => Promise<void>) => Promise<void>;
     /**
-     * Returns the shutdown function that can be used to shut down the database
-     * connection.
+     * Shuts down the database connection.
      *
-     * @returns {() => Promise<void>} The shutdown function that can be used to
-     * shut down the database connection.
+     * @returns {Promise<void>} A promise that resolves when the database connection
+     * has been shut down.
      */
-    get shutdown(): () => Promise<void>;
+    shutdown(): Promise<void>;
 }
 export { Database, Options, Query };
