@@ -19,15 +19,21 @@ const node_postgresql_config_1 = require("node-postgresql-config");
 let debug;
 const debugSource = 'database.class';
 class Database {
+    /**
+     * Constructs a new Database object.
+     *
+     * This constructor is private, and can only be accessed through the static
+     * `getInstance` method.
+     */
     constructor(options) {
         debug = new node_debug_1.Debug(debugSource);
         debug.write(node_debug_1.MessageType.Entry, options ? `options=${JSON.stringify(options)}` : undefined);
         debug.write(node_debug_1.MessageType.Step, 'Generating config options...');
         const configOptions = {};
-        if (options && options.configFilePath) {
+        if (options === null || options === void 0 ? void 0 : options.configFilePath) {
             configOptions.filePath = options.configFilePath;
         }
-        if (options && options.repositoryNumber) {
+        if (options === null || options === void 0 ? void 0 : options.repositoryNumber) {
             const ruleOverrides = {
                 database: () => {
                     const prefix = process.env.POSTGRESQL_DATABASE_PREFIX;
@@ -44,8 +50,8 @@ class Database {
             return value;
         })}`);
         debug.write(node_debug_1.MessageType.Step, 'Generating config...');
-        const config = (0, node_postgresql_config_1.generate)(Object.keys(configOptions).length > 0 ? configOptions : undefined);
-        debug.write(node_debug_1.MessageType.Value, `config=${JSON.stringify((0, node_postgresql_config_1.redacted)(config))}`);
+        const config = (0, node_postgresql_config_1.generateConfig)(Object.keys(configOptions).length ? configOptions : undefined);
+        debug.write(node_debug_1.MessageType.Value, `config=${JSON.stringify((0, node_postgresql_config_1.redactedConfig)(config))}`);
         debug.write(node_debug_1.MessageType.Step, 'Creating connection pool...');
         (0, node_postgresql_1.createConnectionPool)(config);
         debug.write(node_debug_1.MessageType.Step, 'Setting "bigint" type parser...');
@@ -61,18 +67,46 @@ class Database {
         node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMPTZ, datetimeParser);
         debug.write(node_debug_1.MessageType.Exit);
     }
+    /**
+     * Gets the singleton instance of the {@link Database} class.
+     *
+     * @param {Options} [options] The options used to initialize the database.
+     * @returns {Database} The singleton instance of the {@link Database} class.
+     */
     static getInstance(options) {
         if (!__classPrivateFieldGet(this, _a, "f", _Database_instance)) {
             __classPrivateFieldSet(this, _a, new _a(options), "f", _Database_instance);
         }
         return __classPrivateFieldGet(this, _a, "f", _Database_instance);
     }
+    /**
+     * Returns the query function that can be used to execute queries against the
+     * database.
+     *
+     * @returns {Query} The query function that can be used to execute queries
+     * against the database.
+     */
     get query() {
         return node_postgresql_1.query;
     }
+    /**
+     * Returns the transaction function that can be used to execute transactions
+     * against the database.
+     *
+     * @returns {(callback: (query: Query) => Promise<void>) => Promise<void>} The
+     * transaction function that can be used to execute transactions against the
+     * database.
+     */
     get transaction() {
         return node_postgresql_1.transaction;
     }
+    /**
+     * Returns the shutdown function that can be used to shut down the database
+     * connection.
+     *
+     * @returns {() => Promise<void>} The shutdown function that can be used to
+     * shut down the database connection.
+     */
     get shutdown() {
         return node_postgresql_1.shutdown;
     }

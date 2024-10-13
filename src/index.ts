@@ -8,9 +8,9 @@ import {
   types,
 } from 'node-postgresql';
 import {
-  generate,
+  generateConfig,
   Options as ConfigOptions,
-  redacted,
+  redactedConfig,
   RuleOverrides,
 } from 'node-postgresql-config';
 
@@ -23,8 +23,14 @@ interface Options {
 }
 
 class Database {
-  static #instance: Database;
+  static #instance: Database | undefined;
 
+  /**
+   * Constructs a new Database object.
+   *
+   * This constructor is private, and can only be accessed through the static
+   * `getInstance` method.
+   */
   private constructor(options?: Options) {
     debug = new Debug(debugSource);
     debug.write(
@@ -33,10 +39,10 @@ class Database {
     );
     debug.write(MessageType.Step, 'Generating config options...');
     const configOptions: ConfigOptions = {};
-    if (options && options.configFilePath) {
+    if (options?.configFilePath) {
       configOptions.filePath = options.configFilePath;
     }
-    if (options && options.repositoryNumber) {
+    if (options?.repositoryNumber) {
       const ruleOverrides: RuleOverrides = {
         database: () => {
           const prefix = process.env.POSTGRESQL_DATABASE_PREFIX;
@@ -58,12 +64,12 @@ class Database {
       })}`,
     );
     debug.write(MessageType.Step, 'Generating config...');
-    const config = generate(
-      Object.keys(configOptions).length > 0 ? configOptions : undefined,
+    const config = generateConfig(
+      Object.keys(configOptions).length ? configOptions : undefined,
     );
     debug.write(
       MessageType.Value,
-      `config=${JSON.stringify(redacted(config))}`,
+      `config=${JSON.stringify(redactedConfig(config))}`,
     );
     debug.write(MessageType.Step, 'Creating connection pool...');
     createConnectionPool(config);
@@ -81,22 +87,52 @@ class Database {
     debug.write(MessageType.Exit);
   }
 
-  static getInstance(options?: Options) {
+  /**
+   * Gets the singleton instance of the {@link Database} class.
+   *
+   * @param {Options} [options] The options used to initialize the database.
+   * @returns {Database} The singleton instance of the {@link Database} class.
+   */
+  static getInstance(options?: Options): Database {
     if (!this.#instance) {
       this.#instance = new Database(options);
     }
     return this.#instance;
   }
 
-  get query() {
+  /**
+   * Returns the query function that can be used to execute queries against the
+   * database.
+   *
+   * @returns {Query} The query function that can be used to execute queries
+   * against the database.
+   */
+  get query(): Query {
     return query;
   }
 
-  get transaction() {
+  /**
+   * Returns the transaction function that can be used to execute transactions
+   * against the database.
+   *
+   * @returns {(callback: (query: Query) => Promise<void>) => Promise<void>} The
+   * transaction function that can be used to execute transactions against the
+   * database.
+   */
+  get transaction(): (
+    callback: (query: Query) => Promise<void>,
+  ) => Promise<void> {
     return transaction;
   }
 
-  get shutdown() {
+  /**
+   * Returns the shutdown function that can be used to shut down the database
+   * connection.
+   *
+   * @returns {() => Promise<void>} The shutdown function that can be used to
+   * shut down the database connection.
+   */
+  get shutdown(): () => Promise<void> {
     return shutdown;
   }
 }
