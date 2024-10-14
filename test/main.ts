@@ -8,7 +8,7 @@ describe('main', (suiteContext) => {
   Debug.initialize(true);
   let debug: Debug;
   before(async () => {});
-  it('connectivity', async (testContext) => {
+  it('repository', async (testContext) => {
     debug = new Debug(`${suiteContext.name}.test.${testContext.name}`);
     debug.write(MessageType.Entry);
     debug.write(MessageType.Step, 'Establishing database connectivity...');
