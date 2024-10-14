@@ -110,14 +110,12 @@ class Database {
         return node_postgresql_1.transaction;
     }
     /**
-     * Shuts down the database connection.
-     *
-     * This method is used to explicitly shut down the database connection.
+     * Disconnects from the database and resets the singleton instance.
      *
      * @returns {Promise<void>} A promise that resolves when the database connection
-     * has been shut down.
+     * has been closed.
      */
-    shutdown() {
+    disconnect() {
         return __awaiter(this, void 0, void 0, function* () {
             yield (0, node_postgresql_1.shutdown)();
             __classPrivateFieldSet(_a, _a, undefined, "f", _Database_instance);

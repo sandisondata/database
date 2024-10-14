@@ -37,13 +37,11 @@ declare class Database {
      */
     get transaction(): (callback: (query: Query) => Promise<void>) => Promise<void>;
     /**
-     * Shuts down the database connection.
-     *
-     * This method is used to explicitly shut down the database connection.
+     * Disconnects from the database and resets the singleton instance.
      *
      * @returns {Promise<void>} A promise that resolves when the database connection
-     * has been shut down.
+     * has been closed.
      */
-    shutdown(): Promise<void>;
+    disconnect(): Promise<void>;
 }
 export { Database, Options, Query };

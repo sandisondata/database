@@ -126,14 +126,12 @@ class Database {
   }
 
   /**
-   * Shuts down the database connection.
-   *
-   * This method is used to explicitly shut down the database connection.
+   * Disconnects from the database and resets the singleton instance.
    *
    * @returns {Promise<void>} A promise that resolves when the database connection
-   * has been shut down.
+   * has been closed.
    */
-  async shutdown(): Promise<void> {
+  async disconnect(): Promise<void> {
     await shutdown();
     Database.#instance = undefined;
   }

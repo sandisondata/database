@@ -18,8 +18,8 @@ describe('main', (suiteContext) => {
       MessageType.Value,
       `QueryResult.rows=${JSON.stringify((await database.query('SELECT current_database()')).rows)}`,
     );
-    debug.write(MessageType.Step, 'Shutting down database connection...');
-    await database.shutdown();
+    debug.write(MessageType.Step, 'Disconnecting from database...');
+    await database.disconnect();
     debug.write(MessageType.Exit);
     assert.ok(true);
   });
@@ -33,8 +33,8 @@ describe('main', (suiteContext) => {
       MessageType.Value,
       `QueryResult.rows=${JSON.stringify((await database.query('SELECT current_database()')).rows)}`,
     );
-    debug.write(MessageType.Step, 'Shutting down database connection...');
-    await database.shutdown();
+    debug.write(MessageType.Step, 'Disconnecting from database...');
+    await database.disconnect();
     debug.write(MessageType.Exit);
     assert.ok(true);
   });
