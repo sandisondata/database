@@ -128,11 +128,14 @@ class Database {
   /**
    * Shuts down the database connection.
    *
+   * This method is used to explicitly shut down the database connection.
+   *
    * @returns {Promise<void>} A promise that resolves when the database connection
    * has been shut down.
    */
   async shutdown(): Promise<void> {
     await shutdown();
+    Database.#instance = undefined;
   }
 }
 

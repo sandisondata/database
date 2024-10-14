@@ -112,12 +112,15 @@ class Database {
     /**
      * Shuts down the database connection.
      *
+     * This method is used to explicitly shut down the database connection.
+     *
      * @returns {Promise<void>} A promise that resolves when the database connection
      * has been shut down.
      */
     shutdown() {
         return __awaiter(this, void 0, void 0, function* () {
             yield (0, node_postgresql_1.shutdown)();
+            __classPrivateFieldSet(_a, _a, undefined, "f", _Database_instance);
         });
     }
 }
