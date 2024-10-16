@@ -25,8 +25,6 @@ exports.Database = void 0;
 const node_debug_1 = require("node-debug");
 const node_postgresql_1 = require("node-postgresql");
 const node_postgresql_config_1 = require("node-postgresql-config");
-let debug;
-const debugSource = 'database.class';
 class Database {
     /**
      * Constructs a new Database object.
@@ -35,7 +33,7 @@ class Database {
      * `getInstance` method.
      */
     constructor(options) {
-        debug = new node_debug_1.Debug(debugSource);
+        const debug = new node_debug_1.Debug('database');
         debug.write(node_debug_1.MessageType.Entry, options ? `options=${JSON.stringify(options)}` : undefined);
         debug.write(node_debug_1.MessageType.Step, 'Generating config options...');
         const configOptions = {};

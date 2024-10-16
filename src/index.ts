@@ -14,9 +14,6 @@ import {
   RuleOverrides,
 } from 'node-postgresql-config';
 
-let debug: Debug;
-const debugSource = 'database.class';
-
 interface Options {
   configFilePath?: string;
   repositoryNumber?: number;
@@ -32,7 +29,7 @@ class Database {
    * `getInstance` method.
    */
   private constructor(options?: Options) {
-    debug = new Debug(debugSource);
+    const debug = new Debug('database');
     debug.write(
       MessageType.Entry,
       options ? `options=${JSON.stringify(options)}` : undefined,
