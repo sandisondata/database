@@ -76,11 +76,11 @@ class Database {
     types.setTypeParser(types.builtins.NUMERIC, (value) => parseFloat(value));
     debug.write(MessageType.Step, 'Setting "date" type parser...');
     types.setTypeParser(types.builtins.DATE, (value) => value);
-    const datetimeParser = (value: string) => value.replace(' ', 'T');
-    debug.write(MessageType.Step, 'Setting "datetime" type parser...');
-    types.setTypeParser(types.builtins.TIMESTAMP, datetimeParser);
-    debug.write(MessageType.Step, 'Setting "datetime-tz" type parser...');
-    types.setTypeParser(types.builtins.TIMESTAMPTZ, datetimeParser);
+    const timestampParser = (value: string) => value.replace(' ', 'T');
+    debug.write(MessageType.Step, 'Setting "timestamp" type parser...');
+    types.setTypeParser(types.builtins.TIMESTAMP, timestampParser);
+    debug.write(MessageType.Step, 'Setting "timestamptz" type parser...');
+    types.setTypeParser(types.builtins.TIMESTAMPTZ, timestampParser);
     debug.write(MessageType.Exit);
   }
 

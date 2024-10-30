@@ -67,11 +67,11 @@ class Database {
         node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.NUMERIC, (value) => parseFloat(value));
         debug.write(node_debug_1.MessageType.Step, 'Setting "date" type parser...');
         node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.DATE, (value) => value);
-        const datetimeParser = (value) => value.replace(' ', 'T');
-        debug.write(node_debug_1.MessageType.Step, 'Setting "datetime" type parser...');
-        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMP, datetimeParser);
-        debug.write(node_debug_1.MessageType.Step, 'Setting "datetime-tz" type parser...');
-        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMPTZ, datetimeParser);
+        const timestampParser = (value) => value.replace(' ', 'T');
+        debug.write(node_debug_1.MessageType.Step, 'Setting "timestamp" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMP, timestampParser);
+        debug.write(node_debug_1.MessageType.Step, 'Setting "timestamptz" type parser...');
+        node_postgresql_1.types.setTypeParser(node_postgresql_1.types.builtins.TIMESTAMPTZ, timestampParser);
         debug.write(node_debug_1.MessageType.Exit);
     }
     /**
