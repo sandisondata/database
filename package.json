@@ -1,7 +1,7 @@
 {
   "name": "database",
   "version": "1.0.0",
-  "description": "Database wrapper class",
+  "description": "The database wrapper class",
   "author": "Grant Fortington",
   "private": true,
   "license": "MIT",
