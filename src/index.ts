@@ -11,7 +11,6 @@ import {
   generateConfig,
   Options as ConfigOptions,
   redactedConfig,
-  RuleOverrides,
 } from 'node-postgresql-config';
 
 interface Options {
@@ -40,7 +39,7 @@ class Database {
       configOptions.filePath = options.configFilePath;
     }
     if (options?.repositoryNumber) {
-      const ruleOverrides: RuleOverrides = {
+      configOptions.ruleOverrides = {
         database: () => {
           const prefix = process.env.POSTGRESQL_DATABASE_PREFIX;
           return (
@@ -49,7 +48,6 @@ class Database {
           );
         },
       };
-      configOptions.ruleOverrides = ruleOverrides;
     }
     debug.write(
       MessageType.Value,

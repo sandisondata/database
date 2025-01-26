@@ -41,14 +41,13 @@ class Database {
             configOptions.filePath = options.configFilePath;
         }
         if (options === null || options === void 0 ? void 0 : options.repositoryNumber) {
-            const ruleOverrides = {
+            configOptions.ruleOverrides = {
                 database: () => {
                     const prefix = process.env.POSTGRESQL_DATABASE_PREFIX;
                     return ((prefix ? `${prefix}_` : '') +
                         `repository_${options.repositoryNumber}`);
                 },
             };
-            configOptions.ruleOverrides = ruleOverrides;
         }
         debug.write(node_debug_1.MessageType.Value, `configOptions=${JSON.stringify(configOptions, (key, value) => {
             if (typeof value == 'function') {
