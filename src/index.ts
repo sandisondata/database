@@ -13,9 +13,16 @@ import {
   redactedConfig,
 } from 'node-postgresql-config';
 
+declare module 'node-postgresql' {
+  interface Config {
+    max: number;
+  }
+}
+
 interface Options {
   configFilePath?: string;
   repositoryNumber?: number;
+  maxPoolSize?: number;
 }
 
 class Database {
@@ -47,6 +54,12 @@ class Database {
             `repository_${options.repositoryNumber}`
           );
         },
+      };
+    }
+    if (options?.maxPoolSize) {
+      configOptions.ruleOverrides = {
+        ...configOptions.ruleOverrides,
+        max: () => options.maxPoolSize!,
       };
     }
     debug.write(

@@ -49,6 +49,9 @@ class Database {
                 },
             };
         }
+        if (options === null || options === void 0 ? void 0 : options.maxPoolSize) {
+            configOptions.ruleOverrides = Object.assign(Object.assign({}, configOptions.ruleOverrides), { max: () => options.maxPoolSize });
+        }
         debug.write(node_debug_1.MessageType.Value, `configOptions=${JSON.stringify(configOptions, (key, value) => {
             if (typeof value == 'function') {
                 return '<function>';

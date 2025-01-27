@@ -27,7 +27,10 @@ describe('main', (suiteContext) => {
     debug = new Debug(`${suiteContext.name}.test.${testContext.name}`);
     debug.write(MessageType.Entry);
     debug.write(MessageType.Step, 'Establishing database connectivity...');
-    const database = Database.getInstance({ repositoryNumber: 1 });
+    const database = Database.getInstance({
+      repositoryNumber: 1,
+      maxPoolSize: 10,
+    });
     debug.write(MessageType.Step, 'Verifying database connection...');
     debug.write(
       MessageType.Value,

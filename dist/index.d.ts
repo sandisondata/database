@@ -1,7 +1,13 @@
 import { Query } from 'node-postgresql';
+declare module 'node-postgresql' {
+    interface Config {
+        max: number;
+    }
+}
 interface Options {
     configFilePath?: string;
     repositoryNumber?: number;
+    maxPoolSize?: number;
 }
 declare class Database {
     #private;
